@@ -23,11 +23,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('TKAgg') # configure agg for drawing
 
-pixels = []
+hist = np.zeros(256, int)
 for r in range(rowSize):
     for c in range(colSize):
-        pixels.append(img[r,c,0])
-plt.hist(pixels, bins=[i for i in range(256)])
+        hist[img[r,c][0]] += 1 # accumulating number of each intesity
+
+plt.bar(range(len(hist)), hist, 1)
 plt.xlabel('Intensity')
 plt.ylabel('Counts')
 plt.savefig('./image/(B)histogram.jpg')
@@ -118,5 +119,3 @@ for i, cpn in enumerate(boundary):
         cv2.circle(img_c, (cpn['c_'], cpn['r_']), 1, color[i], 3)
 cv2.imwrite('./image/(C)lena.jpg', img_c)
 print('(C)lena.jpg has been written in image/')
-
-
